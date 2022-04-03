@@ -6,7 +6,7 @@ put melons in a shopping cart.
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
-from flask import Flask, render_template, redirect, flash
+from flask import Flask, render_template, redirect, flash, session
 import jinja2
 
 import melons
@@ -64,8 +64,6 @@ def show_melon(melon_id):
 def show_shopping_cart():
     """Display content of shopping cart."""
 
-    # TODO: Display the contents of the shopping cart.
-
     # The logic here will be something like:
     #
     # - get the cart dictionary from the session
@@ -81,6 +79,10 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
+    
+    # ------ Begin My Code ------
+    
+    # ------ End My Code ------
 
     return render_template("cart.html")
 
@@ -92,9 +94,7 @@ def add_to_cart(melon_id):
     When a melon is added to the cart, redirect browser to the shopping cart
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
-
-    # TODO: Finish shopping cart functionality
-
+    
     # The logic here should be something like:
     #
     # - check if a "cart" exists in the session, and create one (an empty
@@ -104,7 +104,18 @@ def add_to_cart(melon_id):
     # - flash a success message
     # - redirect the user to the cart page
 
-    return "Oops! This needs to be implemented!"
+    # ------ Begin My Code ------
+    if 'cart' not in session:
+        session['cart'] = {}
+    if session['cart'].get(melon_id) is None:
+        session['cart'][melon_id] = 1
+    else:
+        session['cart'][melon_id] += 1
+    flash(f'{melons.get_by_id(melon_id).common_name} has been added to the cart!')
+    print(session['cart'])
+    
+    return redirect('/cart')
+    # ------ End My Code ------
 
 
 @app.route("/login", methods=["GET"])
