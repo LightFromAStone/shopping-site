@@ -50,7 +50,11 @@ def show_melon(melon_id):
     Show all info about a melon. Also, provide a button to buy that melon.
     """
 
-    melon = melons.get_by_id("meli")
+    # melon = melons.get_by_id("meli")
+    
+    # ------ Begin My Code ------
+    melon = melons.get_by_id(melon_id)
+    # ------ End My Code ------
     print(melon)
     return render_template("melon_details.html",
                            display_melon=melon)
@@ -147,4 +151,4 @@ def checkout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(port=5005, debug=True, host="0.0.0.0")
