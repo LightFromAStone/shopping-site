@@ -81,10 +81,21 @@ def show_shopping_cart():
     # been added to the session
     
     # ------ Begin My Code ------
+    cart = []
+    order_total = 0
+    added_items = session.get('cart')
     
-    # ------ End My Code ------
+    if added_items is not None:
+        for item in added_items.items():
+            melon = melons.get_by_id(item[0])
+            total_cost = melon.price * item[1]
+            
+            cart.append({'name': melon.common_name, 'quantity': item[1], 'cost': melon.price, 'total cost': total_cost})
+            
+            order_total += total_cost
 
-    return render_template("cart.html")
+    return render_template("cart.html", cart=cart, order_total=order_total)
+    # ------ End My Code ------
 
 
 @app.route("/add_to_cart/<melon_id>")
